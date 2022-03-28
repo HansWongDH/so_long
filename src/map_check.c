@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/26 21:48:58 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/28 19:03:24 by wding-ha         ###   ########.fr       */
+/*   Created: 2022/03/28 14:23:37 by wding-ha          #+#    #+#             */
+/*   Updated: 2022/03/28 14:24:44 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
-# include "../libs/libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
+#include "so_long.h"
 
-typedef struct s_map {
-	int	empty;
-	int	wall;
-	int	collect;
-	int	out;
-	int	player;
-	int	length;
-	int	height;
-}	t_map;
+int	edge_checking(char **map, int vert)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (map[0][i])
+	{
+		if (map[0][i] != '1')
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (map[vert][i])
+	{
+		if (map[0][i] != '1')
+			return (0);
+		i++;
+	}
+	return (1);
+}
