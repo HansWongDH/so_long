@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   initialize_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/26 21:48:58 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/29 18:50:25 by wding-ha         ###   ########.fr       */
+/*   Created: 2022/03/29 18:50:53 by wding-ha          #+#    #+#             */
+/*   Updated: 2022/03/29 18:56:00 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
-# include "../libs/libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
+#include "so_long.h"
 
-typedef struct s_map {
-	int	empty;
-	int	wall;
-	int	collect;
-	int	out;
-	int	player;
-	int	length;
-	int	height;
-}	t_map;
-
-typedef struct s_tile {
-	int	x;
-	int	y;
-	char *file;
-	s_tile *next;
-}	t_tile;
-
-
-#endif
+t_tile	new_tile(char c, int length, int height)
+{
+	t_tile	*new;
+	
+	new = malloc(sizeof (t_tile));
+	if (c == 1)
+	{
+		new->file = "./wall.xpm";
+		new->x = length;
+		new->y = height;
+		new->next = NULL;
+	}
+}
+void	map_info_init()
