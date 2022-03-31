@@ -6,27 +6,31 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 14:10:12 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/29 18:29:50 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/03/31 19:46:44 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <mlx.h>
+#include <stdio.h>
 
 
-int	main(void)
+
+int	main(int argc, char **argv)
 {
-	void	*mlx;
-	void	*mlx_win;
-	void	*img;
-	int		img_height;
-	int		img_width;
+	char	**map;
+	t_map	map_info;
+	int		i;
+	t_vars	vars;
 
-	img_height = 480;
-	img_width = 800;
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, img_width, img_height, "Hello world!");
-	img = mlx_xpm_file_to_image(mlx_win, "./imgs.xpm", &img_width, &img_height);
-	mlx_put_image_to_window (mlx, mlx_win, img, 0, 0);
-	mlx_loop(mlx);
+	i = 0;
+	map = NULL;
+	initialize_map(&map_info);
+	if (argc > 1)
+		map = start_map(argv, &map_info);
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, map_info.length * 32, map_info.height * 32, "Hello world!");
+	draw(map, vars, &map_info);
+	mlx_key_hook(vars.win, keyinput, &vars);
+	mlx_loop(vars.mlx);
 }

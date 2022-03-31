@@ -6,56 +6,28 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:50:53 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/29 19:41:21 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:45:50 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_tile	new_tile(char c, int length, int height)
+char	**start_map(char **argv , t_map *map_info)
 {
-	t_tile	*new;
+	char	*file;
+	char	**map;
+	int		fd;
 
-	new = malloc(sizeof (t_tile));
-	if (c == 1)
+	file = ft_substr(argv[1], ft_strlen(argv[1]) - 4, 4);
+	if (ft_strcmp(file, ".ber"))
 	{
-		new->file = NULL;
-		new->x = 0;
-		new->y = 0;
-		new->next = NULL;
+		write(1, "wrong filetype\n", 16);
+		return (0);
 	}
-	return (new);
-}
-
-void	add_new_tile(t_tile **tile, t_tile *new)
-{
-	t_tile	*next;
-
-	if (tile && new)
-	{
-		if (*tile)
-		{
-			next = ft_stacklast(*tile);
-			next->next = new;
-		}
-		else
-			*tile = new;
-	}
-}
-void	map_info_init(char *s, t_map mapinfo)
-{
-	t_tile	*tile;
-	int		i;
-	int		j;
-
-	tile = NULL;
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		if (i == mapinfo.length)
-			j++;
-		add_new_tile(&tile,new_tile(s[i], i * 50, j * 50));
-		i++;
-	}
+	fd = open(argv[1], O_RDONLY);
+	map_check_vertical(fd, map_info);
+	fd = open(argv[1], O_RDONLY);
+	map = create_map(fd, map_info);
+	close(fd);
+	return (map);
 }
