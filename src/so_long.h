@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:48:58 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/31 19:48:23 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:43:14 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,19 @@ typedef struct s_map {
 typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
+	char	**map;
+	int		x;
+	int		y;
+	int		col;
 }				t_vars;
 
-int	map_check_vertical(int fd, t_map *map);
+int		map_check_vertical(int fd, t_map *map);
 char	**create_map(int fd, t_map *map);
 void	initialize_map(t_map *map);
 char	**start_map(char **argv, t_map *map_info);
-void	draw(char **s, t_vars vars, t_map *map_info);
-int	valid(char **map, int i, int j);
-int	keyinput(int keycode, char **s, t_map *map_info);
-int	move(char **s, t_map *map_info, int ver, int hor);
+void	draw(t_vars vars);
+int		valid(t_vars vars, int i, int j);
+int		keyinput(int keycode, t_vars *vars);
+int		move(t_vars *vars, int ver, int hor);
+void	get_info(t_vars *vars);
 #endif
