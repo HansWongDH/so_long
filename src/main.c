@@ -6,31 +6,36 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 14:10:12 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/31 20:27:46 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/01 19:40:38 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <mlx.h>
-#include <stdio.h>
 
+int	draw2(t_info *info)
+{
+	mlx_put_image_to_window(info->mlx, info->win, info->door, 50, 50);
+	return (1);
+}
 
 int	main(int argc, char **argv)
 {
 	char	**map;
-	t_map	map_info;
+	t_map	m;
 	int		i;
-	t_vars	vars;
+	t_info	info;
 
 	i = 0;
 	map = NULL;
-	initialize_map(&map_info);
+	initialize_map(&m);
+	initialize_info(&info);
 	if (argc > 1)
-		vars.map = start_map(argv, &map_info);
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, map_info.length * 32, map_info.height * 32, "Hello world!");
-	get_info(&vars);
-	draw(vars);
-	mlx_key_hook(vars.win, keyinput, &vars);
-	mlx_loop(vars.mlx);
+		info.map = start_map(argv, &m);
+	info.mlx = mlx_init();
+	info.win = mlx_new_window(info.mlx, m.length * 32, m.height * 32, "Game");
+	assign_image(&info);
+	get_info(&info);
+	mlx_key_hook(info.win, keyinput, &info);
+	mlx_loop_hook(info.mlx, draw, &info);
+	mlx_loop(info.mlx);
 }

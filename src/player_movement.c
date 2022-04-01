@@ -6,21 +6,20 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/31 20:43:44 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/01 20:18:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <stdio.h>
 
-void	get_info(t_vars *vars)
+void	get_info(t_info *info)
 {
 	int		i;
 	int		j;
 	char	**s;
 
-	vars->col = 0;
-	s = vars->map;
+	info->col = 0;
+	s = info->map;
 	i = 0;
 	while (s[i])
 	{
@@ -29,40 +28,59 @@ void	get_info(t_vars *vars)
 		{
 			if (s[i][j] == 'P')
 			{
-				vars->x = j;
-				vars->y = i;
+				info->x = j;
+				info->y = i;
 			}
 			if (s[i][j] == 'C')
-				vars->col++;
+				info->col++;
 			j++;
 		}
 		i++;
 	}
 }
 
-int	move(t_vars *vars, int ver, int hor)
+int	endgame(t_info *info)
 {
-	if (valid(*vars, vars->y + ver, vars->x + hor))
+	mlx_destroy_image(info->mlx, info->empty);
+	mlx_destroy_image(info->mlx, info->wall);
+	mlx_destroy_image(info->mlx, info->player);
+	mlx_destroy_image(info->mlx, info->coin);
+	mlx_destroy_window(info->mlx, info->win);
+	free2d(info->map);
+	system("leaks test");
+	exit(0);
+	return (0);
+}
+
+int	move(t_info *info, int ver, int hor)
+{
+	if (valid(*info, info->y + ver, info->x + hor))
 	{
-		if (vars->map[vars->y + ver][vars->x + hor] == 'E' && vars->col == 0)
-			write(1, "You Win\n", 9);
-		vars->map[vars->y][vars->x] = '0';
-		vars->map[vars->y + ver][vars->x + hor] = 'P';
-		get_info(vars);
-	}	
-	draw(*vars);
+		if (info->map[info->y + ver][info->x + hor] == 'E' && info->col == 0)
+		{
+			write(1, "You Win\n", 8);
+			info->vic = 1;
+		}
+		info->map[info->y][info->x] = '0';
+		info->map[info->y + ver][info->x + hor] = 'P';
+		get_info(info);
+	}
+	if (info-> death == 0)
+		draw(info);
 	return (1);
 }
 
-int	keyinput(int keycode, t_vars *vars)
+int	keyinput(int keycode, t_info *info)
 {
 	if (keycode == A)
-		move(vars, 0, -1);
+		move(info, 0, -1);
 	if (keycode == W)
-		move(vars, -1, 0);
+		move(info, -1, 0);
 	if (keycode == S)
-		move(vars, 1, 0);
+		move(info, 1, 0);
 	if (keycode == D)
-		move(vars, 0, 1);
+		move(info, 0, 1);
+	if (keycode == ESC)
+		endgame(info);
 	return (0);
 }

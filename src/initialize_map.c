@@ -6,13 +6,13 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:50:53 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/31 14:45:50 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/01 16:07:47 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	**start_map(char **argv , t_map *map_info)
+char	**start_map(char **argv, t_map *map_info)
 {
 	char	*file;
 	char	**map;
@@ -22,8 +22,10 @@ char	**start_map(char **argv , t_map *map_info)
 	if (ft_strcmp(file, ".ber"))
 	{
 		write(1, "wrong filetype\n", 16);
+		free(file);
 		return (0);
 	}
+	free(file);
 	fd = open(argv[1], O_RDONLY);
 	map_check_vertical(fd, map_info);
 	fd = open(argv[1], O_RDONLY);

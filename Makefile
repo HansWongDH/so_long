@@ -6,14 +6,14 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/03/31 19:51:12 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/04/01 16:06:46 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= test
 #############################################################
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS			= -Wall -Wextra -Werror
 RM				= rm -f
 #############################################################
 INC				= -Iinclude -I$(LIBFT_DIR)

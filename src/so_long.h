@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:48:58 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/31 20:43:14 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/01 19:46:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,36 +21,50 @@
 # define W 13
 # define S 1
 # define D 2
+# define ESC 53
 
 
 typedef struct s_map {
-	int	empty;
-	int	wall;
-	int	collect;
-	int	out;
-	int	player;
-	int	x;
-	int	y;
+	int		empty;
+	int		wall;
+	int		collect;
+	int		out;
+	int		player;
 	size_t	length;
-	int	height;
+	int		height;
 }	t_map;
 
-typedef struct	s_vars {
+typedef struct s_info {
 	void	*mlx;
 	void	*win;
+	void	*wall;
+	void	*door;
+	void	*empty;
+	void	*player;
+	void	*coin;
 	char	**map;
+	int		enemy;
+	int		w;
+	int		h;
 	int		x;
 	int		y;
 	int		col;
-}				t_vars;
+	int		vic;
+	int		death;
+	int		step;
+}				t_info;
 
 int		map_check_vertical(int fd, t_map *map);
+void	initialize_info(t_info *info);
+void	free2d(char **s);
+void	assign_image(t_info *info);
 char	**create_map(int fd, t_map *map);
 void	initialize_map(t_map *map);
 char	**start_map(char **argv, t_map *map_info);
-void	draw(t_vars vars);
-int		valid(t_vars vars, int i, int j);
-int		keyinput(int keycode, t_vars *vars);
-int		move(t_vars *vars, int ver, int hor);
-void	get_info(t_vars *vars);
+int		draw(t_info *info);
+int		valid(t_info info, int i, int j);
+int		keyinput(int keycode, t_info *info);
+int		move(t_info *info, int ver, int hor);
+void	get_info(t_info *info);
+int		endgame(t_info *info);
 #endif

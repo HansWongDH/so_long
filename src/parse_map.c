@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:25 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/03/31 20:05:58 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/01 16:08:41 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	initialize_map(t_map *map)
 	map->collect = 0;
 	map->out = 0;
 	map->player = 0;
-	map->x = 0;
-	map->y = 0;
 	map->length = 0;
 	map->height = 0;
 }
@@ -66,4 +64,3 @@ char	**create_map(int fd, t_map *map)
 	s[i] = NULL;
 	return (s);
 }
-
