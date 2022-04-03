@@ -6,23 +6,11 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:25 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/01 16:08:41 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/03 18:08:11 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <stdio.h>
-
-void	initialize_map(t_map *map)
-{
-	map->empty = 0;
-	map->wall = 0;
-	map->collect = 0;
-	map->out = 0;
-	map->player = 0;
-	map->length = 0;
-	map->height = 0;
-}
 
 int	map_check_vertical(int fd, t_map *map)
 {
@@ -34,6 +22,12 @@ int	map_check_vertical(int fd, t_map *map)
 			map->height++;
 		if (!ft_strchr("01CEP\n", buf[0]))
 			return (0);
+		if (buf[0] == 'P')
+			map->player++;
+		if (buf[0] == 'E')
+			map->out++;
+		if (buf[0] == 'C')
+			map->collect++;
 	}
 	map->height++;
 	return (1);
@@ -46,9 +40,8 @@ char	**create_map(int fd, t_map *map)
 	char	*l;
 	int		i;
 
-	s = malloc(sizeof(char *) * map->height);
+	s = malloc(sizeof(char *) * map->height + 1);
 	i = 0;
-	s[map->height - 1] = NULL;
 	while (get_next_line(fd, &l))
 	{
 		if (map->length == 0)
@@ -61,6 +54,8 @@ char	**create_map(int fd, t_map *map)
 		free(l);
 		i++;
 	}
-	s[i] = NULL;
+	s[i] = ft_strdup(l);
+	free(l);
+	s[i + 1] = NULL;
 	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:48:58 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/01 19:46:25 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/03 18:25:17 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define S 1
 # define D 2
 # define ESC 53
-
 
 typedef struct s_map {
 	int		empty;
@@ -52,6 +51,8 @@ typedef struct s_info {
 	int		vic;
 	int		death;
 	int		step;
+	int		speed;
+	char	*stepz;
 }				t_info;
 
 int		map_check_vertical(int fd, t_map *map);
@@ -67,4 +68,7 @@ int		keyinput(int keycode, t_info *info);
 int		move(t_info *info, int ver, int hor);
 void	get_info(t_info *info);
 int		endgame(t_info *info);
+void	assign_image(t_info *info);
+int		create_trgb(int t, int r, int g, int b);
+int		error_message(char **map);
 #endif

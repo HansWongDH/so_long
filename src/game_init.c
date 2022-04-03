@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:18:38 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/01 20:18:06 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/03 17:04:09 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ void	draw_wall(t_info info, int i, int j)
 		mlx_put_image_to_window(info.mlx, info.win, info.door, j * 32, i * 32);
 	else
 		mlx_put_image_to_window(info.mlx, info.win, info.empty, j * 32, i * 32);
+	if (info.col > 0 && s[i][j] == 'C')
+		mlx_put_image_to_window(info.mlx, info.win, info.coin, j * 32, i * 32);
+}
+
+void	render_menu(t_info info, int i, int j)
+{
+	int	p;
+
+	p = 0;
+	while (p < j)
+	{
+		mlx_put_image_to_window(info.mlx, info.win, info.empty, p * 32, i * 32);
+		p++;
+	}
 }
 
 void	draw_player(t_info info, int i, int j)
@@ -30,56 +44,38 @@ void	draw_player(t_info info, int i, int j)
 	mlx_put_image_to_window(info.mlx, info.win, info.player, j * 32, i * 32);
 }
 
-void	draw_dynamic(t_info info, int i, int j)
-{
-	if (info.col > 0)
-		mlx_put_image_to_window(info.mlx, info.win, info.coin, j * 32, i * 32);
-}
 
-void	draw_enemy(t_info *info, int i, int j)
-{
-	mlx_put_image_to_window(info->mlx, info->win, info->player, j * 32, i * 32);
-}
-void	assign_image(t_info *info)
-{
-	int		h;
-	int		w;
-	void	*mlx;
 
-	mlx = info->mlx;
-	info->wall = mlx_xpm_file_to_image(mlx, "./texture/wall.xpm", &w, &h);
-	info->empty = mlx_xpm_file_to_image(mlx, "./texture/empty.xpm", &w, &h);
-	info->door = mlx_xpm_file_to_image(mlx, "./texture/exit.xpm", &w, &h);
-	info->coin = mlx_xpm_file_to_image(mlx, "./texture/col.xpm", &w, &h);
-	info->player = mlx_xpm_file_to_image(mlx, "./texture/player.xpm", &w, &h);
-}
+// void	draw_enemy(t_info *info, int i, int j)
+// {
+// 	if (info->map[i][j] == 'A')
+// 	{
+// mlx_put_image_to_window(info->mlx, info->win, info->player, j * 32, i * 32);
+// 	}
+// }
 
 int	draw(t_info *info)
 {
 	int		i;
 	int		j;
+	int		c;
 
+	c = create_trgb(0, 255, 255, 255);
 	i = 0;
 	while (info->map[i])
 	{
 		j = 0;
 		while (info->map[i][j])
 		{
-			if (info->map[i][j] == '0' && info->enemy == 0)
-			{
-				info->map[i][j] = 'A';
-				info->enemy = 1;
-			}
 			draw_wall(*info, i, j);
-			if (info->map[i][j] == 'C')
-				draw_dynamic(*info, i, j);
 			if (info->map[i][j] == 'P')
 				draw_player(*info, i, j);
-			if (info->map[i][j] == 'A')
-				draw_enemy(info, i, j);
 			j++;
 		}
 		i++;
 	}
+	render_menu(*info, i, j);
+	mlx_string_put(info->mlx, info->win, j * 16, i * 32, c, info->stepz);
+	usleep(10000);
 	return (1);
 }

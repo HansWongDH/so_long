@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 14:23:37 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/01 19:53:02 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/03 15:05:51 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	free2d(char **s)
 
 	i = 0;
 	while (s[i])
-		free(s[i++]);
+	{
+		free(s[i]);
+		i++;
+	}
 	free(s[i]);
 	free(s);
 }
@@ -49,4 +52,6 @@ void	initialize_info(t_info *info)
 	info->vic = 0;
 	info->death = 0;
 	info->step = 0;
+	info->speed = 0;
+	info->stepz = malloc(sizeof(char) * 1);
 }
