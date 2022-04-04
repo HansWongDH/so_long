@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:50:53 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/03 18:31:38 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/04 14:26:30 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	initialize_map(t_map *map)
 	map->player = 0;
 	map->length = 0;
 	map->height = 1;
+	map->error = 0;
 }
 
 int	check_wall(char *s)
@@ -39,9 +40,9 @@ int	check_wall(char *s)
 
 int	map_validation(char **map, t_map m)
 {
-	if (!check_wall(map[0]) || !check_wall(map[m.height - 1]))
+	if (!check_wall(map[0]) || !check_wall(map[m.height - 2]))
 		return (0);
-	if (m.player != 1 || m.out != 1 || m.collect < 1)
+	if (m.player != 1 || m.out != 1 || m.collect < 1 || m.error == 1)
 		return (0);
 	return (1);
 }
@@ -61,14 +62,13 @@ char	**start_map(char **argv, t_map *map_info)
 	}
 	free(file);
 	fd = open(argv[1], O_RDONLY);
-	map_check_vertical(fd, map_info);
+	if (!map_check_vertical(fd, map_info))
+	{
+		ft_putstr_fd("Error\n", 2);
+		return (0);
+	}
 	fd = open(argv[1], O_RDONLY);
 	map = create_map(fd, map_info);
-	// if (!map_validation(map, *map_info))
-	// {
-	// 	error_message(map);
-	// 	return (0);
-	// }
 	close(fd);
 	return (map);
 }

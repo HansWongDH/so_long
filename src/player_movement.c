@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/03 17:58:42 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/04 19:02:31 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,20 @@ int	endgame(t_info *info)
 {
 	mlx_destroy_image(info->mlx, info->empty);
 	mlx_destroy_image(info->mlx, info->wall);
-	mlx_destroy_image(info->mlx, info->player);
+	mlx_destroy_image(info->mlx, info->p1);
+	mlx_destroy_image(info->mlx, info->p2);
+	mlx_destroy_image(info->mlx, info->p3);
+	mlx_destroy_image(info->mlx, info->p4);
 	mlx_destroy_image(info->mlx, info->coin);
 	mlx_destroy_window(info->mlx, info->win);
-	free(info->mlx);
 	free2d(info->map);
-	system("leaks so_long");
 	exit(0);
 	return (0);
 }
 
 int	move(t_info *info, int ver, int hor)
 {
-	if (valid(*info, info->y + ver, info->x + hor) && info->vic == 0)
+	if (valid(info, info->y + ver, info->x + hor) && info->vic == 0)
 	{
 		if (info->map[info->y + ver][info->x + hor] == 'E' && info->col == 0)
 		{
@@ -65,12 +66,11 @@ int	move(t_info *info, int ver, int hor)
 		info->map[info->y][info->x] = '0';
 		info->map[info->y + ver][info->x + hor] = 'P';
 		get_info(info);
+		info->step++;
 		if (info->stepz)
 			free(info->stepz);
-		info->stepz = ft_itoa(info->step++);
+		info->stepz = ft_itoa(info->step);
 	}
-	if (info-> death == 0)
-		draw(info);
 	return (1);
 }
 

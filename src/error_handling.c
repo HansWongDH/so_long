@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 18:18:31 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/03 18:28:16 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/04 13:40:15 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	error_message(char **map)
 {
-	if (map || *map)
+	if (map)
 		free2d(map);
 	ft_putstr_fd("Error\n", 2);
 	return (0);

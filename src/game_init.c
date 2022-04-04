@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 11:18:38 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/03 17:04:09 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/04 19:33:36 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,22 @@ void	render_menu(t_info info, int i, int j)
 
 void	draw_player(t_info info, int i, int j)
 {
-	mlx_put_image_to_window(info.mlx, info.win, info.player, j * 32, i * 32);
+	static int	p;
+
+	if (p < 15)
+		mlx_put_image_to_window(info.mlx, info.win, info.p1, j * 32, i * 32);
+	if (p >= 15 && p < 30)
+		mlx_put_image_to_window(info.mlx, info.win, info.p2, j * 32, i * 32);
+	if (p >= 30 && p < 45)
+		mlx_put_image_to_window(info.mlx, info.win, info.p3, j * 32, i * 32);
+	if (p >= 45 && p <= 60)
+	{
+		if (p == 60)
+			p = 0;
+		mlx_put_image_to_window(info.mlx, info.win, info.p4, j * 32, i * 32);
+	}
+	p++;
 }
-
-
-
-// void	draw_enemy(t_info *info, int i, int j)
-// {
-// 	if (info->map[i][j] == 'A')
-// 	{
-// mlx_put_image_to_window(info->mlx, info->win, info->player, j * 32, i * 32);
-// 	}
-// }
 
 int	draw(t_info *info)
 {
@@ -68,14 +72,26 @@ int	draw(t_info *info)
 		while (info->map[i][j])
 		{
 			draw_wall(*info, i, j);
-			if (info->map[i][j] == 'P')
+			if (info->map[i][j] == 'P' && info->death == 0)
 				draw_player(*info, i, j);
 			j++;
 		}
 		i++;
 	}
+	draw_enemy(info);
 	render_menu(*info, i, j);
-	mlx_string_put(info->mlx, info->win, j * 16, i * 32, c, info->stepz);
-	usleep(10000);
+	if (info->stepz)
+		mlx_string_put(info->mlx, info->win, j * 16, i * 32, c, info->stepz);
 	return (1);
+}
+
+void	game_init(t_info *info)
+{
+	assign_image(info);
+	spawn_enemy(info);
+	get_info(info);
+	draw(info);
+	mlx_key_hook(info->win, keyinput, info);
+	mlx_hook(info->win, 17, 1L << 1, endgame, info);
+	mlx_loop_hook(info->mlx, draw, info);
 }
