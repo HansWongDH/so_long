@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:50:53 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/05 14:44:39 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/06 02:49:44 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,25 @@ int	map_validation(char **map, t_map m)
 	return (1);
 }
 
+int	error_message_file(void)
+{
+	ft_putstr_fd("Wrong filetype\n", 2);
+	return (0);
+}
+
 char	**start_map(char **argv, t_map *map_info)
 {
 	char	*file;
 	char	**map;
 	int		fd;
 
+	if (ft_strlen(argv[1]) < 5)
+		return (error_message_file);
 	file = ft_substr(argv[1], ft_strlen(argv[1]) - 4, 4);
 	if (ft_strcmp(file, ".ber"))
 	{
-		ft_putstr_fd("Wrong filetype\n", 2);
 		free(file);
-		return (0);
+		return (error_message_file);
 	}
 	free(file);
 	fd = open(argv[1], O_RDONLY);
