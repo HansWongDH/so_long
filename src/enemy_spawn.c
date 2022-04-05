@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 19:12:14 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/04 19:32:25 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/05 14:42:27 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	valid_spawn(t_info *info, int i, int j)
 {
 	if (info->map[i + 1][j] == '1' && info->map[i - 1][j] == '1')
+		return (0);
+	if (info->map[i + 1][j] == 'C' || info->map[i - 1][j] == 'C')
 		return (0);
 	while (i > 0)
 	{

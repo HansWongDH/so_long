@@ -6,14 +6,14 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/04/04 19:23:07 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/04/05 14:45:23 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= so_long
 #############################################################
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS			= -Wall -Wextra -Werror
 RM				= rm -f
 #############################################################
 INC				= -Iinclude -I$(LIBFT_DIR)
@@ -29,20 +29,23 @@ LIBX			= -lmlx -framework OpenGL -framework AppKit
 all:			$(NAME) $(C_NAME)
 
 $(NAME):		$(OBJS) $(MAIN)
-	make -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(INC) $(LIBX) -o $(NAME) $(MAIN) $(OBJS) $(LIB)
+	@make -C $(LIBFT_DIR)
+	@$(CC) $(CFLAGS) $(INC) $(LIBX) -o $(NAME) $(MAIN) $(OBJS) $(LIB)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
-	make clean -C $(LIBFT_DIR)
+	@$(RM) $(OBJS)
+	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
-	make fclean -C $(LIBFT_DIR)
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
+
+test: re
+	./$(NAME) test.ber
 
 .PHONY: all clean fclean re

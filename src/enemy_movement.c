@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:09:43 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/04 19:34:23 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/05 14:41:34 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,19 @@ void	enemy_movement(t_info *info, int i, int j)
 			info->map[i - 1][j] = 'a';
 		}
 	}
+	return ;
 }
 
 void	set_delay(t_info *info, int i, int j)
 {
-	static int	p;
+	static int	d;
 
-	if (p == 60)
+	if (d == 60)
 	{
 		enemy_movement(info, i, j);
-		p = 0;
+		d = 0;
 	}
-	p++;
+	d++;
 }
 
 void	enemy_animation(t_info info, int i, int j)
