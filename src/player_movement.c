@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:08:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/05 14:20:51 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/06 03:03:59 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	move(t_info *info, int ver, int hor)
 	{
 		if (info->map[info->y + ver][info->x + hor] == 'E' && info->col == 0)
 		{
-			write(1, "You Win\n", 8);
+			ft_putstr_fd("You win\n", 1);
 			info->vic = 1;
 			endgame(info);
 		}

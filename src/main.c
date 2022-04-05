@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 14:10:12 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/06 01:45:40 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/06 03:29:16 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	main(int argc, char **argv)
 	t_info	info;
 
 	if (argc != 2)
+	{
+		ft_putstr_fd("error\n", 2);
 		return (0);
+	}
 	initialize_map(&m);
 	initialize_info(&info);
 	info.map = start_map(argv, &m);
